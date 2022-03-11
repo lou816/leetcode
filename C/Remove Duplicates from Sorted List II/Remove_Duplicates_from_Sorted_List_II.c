@@ -18,7 +18,7 @@
  * };
  */
 
-//My way
+//My way (尚未精簡)
 struct ListNode* deleteDuplicates(struct ListNode* head){
     if(head == NULL){
         return NULL;
