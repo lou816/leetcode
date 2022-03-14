@@ -99,3 +99,49 @@ char * simplifyPath(char * path){
     }
     return absolute_path;
 }
+
+//Better way 
+//在原始的path上面操作用top紀錄有效路徑,如果最後top為負值就回傳跟目錄字串
+char* simplifyPath(char* path) 
+{
+    int top = -1;
+    int i;
+    int j;
+
+    for(i = 0; path[i] != '\0'; ++i)
+    {
+        path[++top] = path[i]; 
+        if(top >= 1 && path[top - 1] == '/' && path[top] == '.' && (path[i + 1] == '/' || path[i + 1] == '\0'))
+        {
+            top -= 2;
+        }
+        else if(top >= 2 && path[top - 2] == '/' && path[top - 1] == '.' && path[top] == '.' && (path[i + 1] == '/' || path[i + 1] == '\0'))
+        {
+            for(j = top - 3; j >= 0; --j)
+            {
+                if(path[j] == '/') break;
+            }
+            if(j < 0)
+            {
+                top = -1;
+            }
+            else
+            {
+                top = j - 1;
+            }
+        }
+        else if(path[top] == '/' && path[i + 1] == '/') --top;
+    }
+    if(top > 0) 
+    {
+        if(path[top] == '/') path[top] = '\0';
+        else path[top + 1] = '\0';
+    }
+    else if(top == 0) path[top + 1] = '\0';
+    else 
+    {
+        path[0] = '/'; 
+        path[1] = '\0';
+    }
+    return path;
+}
