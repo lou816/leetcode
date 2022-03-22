@@ -54,21 +54,6 @@ FreqStack* freqStackCreate() {
 }
 
 void freqStackPush(FreqStack* curr, int val) {
-    // FreqStack *check = curr, *check1 = curr, *check2 = curr;
-    // printf("\nbefore:\n");
-    // while(check1->next != NULL){
-        // printf("%d\t%d-->",check1->val, check1->freq);
-        // printf("%d-->", check1->val);
-        // check1 = check1->next;
-    // }
-    // printf("%d-->NULL\n",check1->val);
-    // while(check2->next != NULL){
-        // printf("%d\t%d-->",check2->val, check2->freq);
-        // printf("%d-->", check2->freq);
-        // check2 = check2->next;
-    // }
-    // printf("%d-->NULL\n",check2->freq);
-
     if(curr->val == -1){
         curr->val = val;
         curr->freq = 1;
@@ -106,15 +91,6 @@ void freqStackPush(FreqStack* curr, int val) {
     } else {
         tmp->freq = newFreq;
     }
-    
-    //check
-    // printf("after:\n");
-    // while(check->next != NULL){
-        // printf("%d\t%d-->",check->val, check->freq);
-        // printf("%d-->", check->val);
-        // check = check->next;
-    // }
-    // printf("%d-->NULL\n\n",check->val);
 }
 
 int freqStackPop(FreqStack* curr) {
@@ -125,64 +101,40 @@ int freqStackPop(FreqStack* curr) {
         curr->freq = -1;
         return target;
     }
-    // FreqStack *check = curr, *check1 = curr, *check2 = curr;
-    // printf("\nbefore:\n");
-    // while(check1->next != NULL){
-        // printf("%d\t%d-->",check1->val, check1->freq);
-        // printf("%d-->", check1->val);
-        // check1 = check1->next;
-    // }
-    // printf("%d-->NULL\n",check1->val);
-    // while(check2->next != NULL){
-        // printf("%d\t%d-->",check2->val, check2->freq);
-        // printf("%d-->", check2->freq);
-        // check2 = check2->next;
-    // }
-    // printf("%d-->NULL\n",check2->freq);
-    // printf("start finding\n");
     while(curr->next != NULL){
-        // printf("%d\t%d\n",curr->val,curr->freq);
         if(curr->freq >= freq){
             target = curr->val;
             freq = curr->freq;
         }
         curr = curr->next;
     }
-    // printf("%d\t%d\n",curr->val,curr->freq);
     if(curr->freq >= freq){
         target = curr->val;
         freq = curr->freq;
     }
-    // printf("finish finding\n");
     while(curr->val != target){
         curr = curr->before;
     }
 
     //popping
-    // printf("target is %d\n",target);
     if(curr->next == NULL){
-        // printf("my back is null\n");
         FreqStack *preCurr = curr->before;
         preCurr->next = NULL;
         curr->before = NULL;
         free(curr);
         curr = preCurr;
     } else if(curr->before == NULL){
-        // printf("my before is null\n");
         FreqStack *nextCurr = curr->next;
         nextCurr->before = NULL;
         free(curr);
         curr = nextCurr;
     } else {
-        // printf("i'm in middle\n");
         FreqStack *preCurr = curr->before, *nextCurr = curr->next;
-        // printf("%d\t%d\n",preCurr->val, nextCurr->val);
         preCurr->next = nextCurr;
         nextCurr->before = preCurr;
         curr->before = NULL; curr->next = NULL;
         free(curr);
         curr = preCurr;
-        // printf("myPre:%d\tmyNext:%d\n",curr->before->val,curr->next->val);
     }
     
     while(curr->before != NULL){
@@ -194,15 +146,6 @@ int freqStackPop(FreqStack* curr) {
     if(curr->val == target){
         curr->freq = freq-1;
     }
-    //check
-    // printf("after:\n");
-    // while(check->next != NULL){
-        // printf("%d\t%d-->",check->val, check->freq);
-        // printf("%d-->", check->val);
-        // check = check->next;
-    // }
-    // printf("%d-->NULL\n\n",check->val);
-
     return target;
 }
 
