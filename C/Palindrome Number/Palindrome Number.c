@@ -30,34 +30,68 @@
 // Follow up: Could you solve it without converting the integer to a string?
 
 //My way
+
 bool isPalindrome(int x){
-    int size = 0;
-    double X = 0;
-    if(x > 0){
-        size = 0;
-        X = x;
-    } else {
-        size = 1;
-        X = (double)x * (-1);
+    if(x < 0){
+        return false;
     }
-    printf("%ld\n",X);
-    while(X != 0){
-        X /= 10;
-        size++;
-    }
-    // printf("%d\n",size);
-    if(size == 0 || size == 1){
+    if(x < 10){
         return true;
     }
-    printf("%d\n",size);
-    char *str = (char*)malloc(sizeof(char)*(size+1));
-    str = (char*)calloc((size+1),sizeof(char));
-    sprintf(str,"%d",x);
-    printf("%s\n%d\n",str,size);
-    for(int i = 0; i < size/2; i++){
-        if(str[i] != str[size-1-i]){
-            return false;
-        }
-    }       
-    return true;
+
+    long long int maxLenValue = 1, len = 0;
+    for(; maxLenValue <= x; maxLenValue*=10, len++){}
+    maxLenValue/=10;
+    printf("%lld\t%d\n",maxLenValue,len);
+    int rightInt = 1;
+    for(int i = 0; i < len/2; i++){
+        rightInt*=10;
+    }
+    rightInt = x%rightInt;
+    printf("%d\n",rightInt);
+    int numOfDigit = 1;
+    int leftInt = 0;
+   for(int i = 0; i < len/2; i++){
+       leftInt += x/maxLenValue*numOfDigit;
+       x -= x/maxLenValue*maxLenValue;
+       maxLenValue/=10;
+       numOfDigit*=10;
+   }
+
+   printf("%d\t%d\n",rightInt,leftInt);
+   if(leftInt == rightInt){
+       return true;
+   } else{
+       return false;
+   }
 }
+
+// Better way
+// 用array裝每個位數的值確認映射
+
+// bool isPalindrome(int x) {
+    
+//     int digits[10];
+    
+//     if (x<0) {
+//         return false;
+//     }
+    
+//     int maxIndex = 0;
+//     while(x!=0) {
+//         digits[maxIndex] = x % 10;
+//         x /= 10;
+//         maxIndex++;
+//     }
+    
+//     int i=0, j=maxIndex -1;
+    
+//     while (i<j) {
+//         if (digits[i] != digits[j]) {
+//             return false;
+//         }
+//         i++;
+//         j--;
+//     }
+//     return true;
+// }
