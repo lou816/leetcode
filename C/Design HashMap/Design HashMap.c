@@ -43,8 +43,8 @@ typedef struct node{
 
 
 MyHashMap* myHashMapCreate() {
-    MyHashMap *hashMap = (MyHashMap*)malloc(sizeof(MyHashMap) * 100);
-    for(int i = 0; i < 100; i++){
+    MyHashMap *hashMap = (MyHashMap*)malloc(sizeof(MyHashMap) * 1000);
+    for(int i = 0; i < 1000; i++){
         hashMap[i].val = -1;
         hashMap[i].key = -1;
         hashMap[i].next = NULL;
@@ -53,7 +53,7 @@ MyHashMap* myHashMapCreate() {
 }
 
 void myHashMapPut(MyHashMap* obj, int key, int value) {
-    int index = key % 100;
+    int index = key % 1000;
     obj += index;
     while(obj->next){
         if(obj->next->key == key){
@@ -71,7 +71,7 @@ void myHashMapPut(MyHashMap* obj, int key, int value) {
 }
 
 int myHashMapGet(MyHashMap* obj, int key) {
-    int index = key % 100;
+    int index = key % 1000;
     obj += index;
     while(obj){
         if(obj->key == key)
@@ -82,7 +82,7 @@ int myHashMapGet(MyHashMap* obj, int key) {
 }
 
 void myHashMapRemove(MyHashMap* obj, int key) {
-    int index = key % 100;
+    int index = key % 1000;
     obj += index;
     while(obj->next){
         if(obj->next->key == key){
@@ -97,7 +97,7 @@ void myHashMapRemove(MyHashMap* obj, int key) {
 
 void myHashMapFree(MyHashMap* obj) {
     MyHashMap *head = obj;
-    for(int i = 0; i < 99; i++){
+    for(int i = 0; i < 999; i++){
         obj++;
         MyHashMap *curr = obj->next, *precurr;
         while(curr){
